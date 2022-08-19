@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.space.mapper.UserinfoMapper">
+
+    <!--  @author Accqiao  -->
+    <!--  @description 我改的模板！虽然也没啥改动，，。  -->
+
+    <resultMap id="BaseResultMap" type="work.space.entity.Userinfo">
+            <id property="uid" column="uid" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+            <result property="signature" column="signature" jdbcType="VARCHAR"/>
+            <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
+            <result property="updatetime" column="UpdateTime" jdbcType="TIMESTAMP"/>
+            <result property="createtime" column="CreateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        uid,name,gender,phone,email,status,signature,introduction,UpdateTime,CreateTime
+    </sql>
+    <!--  快在下面写新的语句咯，，。  -->
+
+
+
+
+
+
+    <!--  模板设置: 查询 ByPrimaryKey  -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from userinfo
+        where  uid = #{uid,jdbcType=VARCHAR} 
+    </select>
+
+    <!--  模板设置: 删除 ByPrimaryKey  -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from userinfo
+        where  uid = #{uid,jdbcType=VARCHAR} 
+    </delete>
+
+    <!--  模板设置: 插入一条数据  -->
+    <insert id="insert" keyColumn="uid" keyProperty="uid"
+        parameterType="work.space.entity.Userinfo" useGeneratedKeys="true">
+        insert into userinfo
+        ( uid,name,gender,phone,email,status,signature,introduction,UpdateTime,CreateTime)
+        values (
+            #{uid,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR},
+            #{gender,jdbcType=VARCHAR},
+            #{phone,jdbcType=VARCHAR},
+            #{email,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{signature,jdbcType=VARCHAR},
+            #{introduction,jdbcType=VARCHAR},
+            #{updatetime,jdbcType=TIMESTAMP},
+            #{createtime,jdbcType=TIMESTAMP}        
+        )
+    </insert>
+
+    <!--  模板设置: (选择性)插入一条数据  -->
+    <insert id="insertSelective" keyColumn="uid" keyProperty="uid"
+        parameterType="work.space.entity.Userinfo" useGeneratedKeys="true">
+        insert into userinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="uid != null">uid,</if>
+                <if test="name != null">name,</if>
+                <if test="gender != null">gender,</if>
+                <if test="phone != null">phone,</if>
+                <if test="email != null">email,</if>
+                <if test="status != null">status,</if>
+                <if test="signature != null">signature,</if>
+                <if test="introduction != null">introduction,</if>
+                <if test="updatetime != null">UpdateTime,</if>
+                <if test="createtime != null">CreateTime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="uid != null">#{uid,jdbcType=VARCHAR},</if>
+                <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+                <if test="gender != null">#{gender,jdbcType=VARCHAR},</if>
+                <if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+                <if test="email != null">#{email,jdbcType=VARCHAR},</if>
+                <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+                <if test="signature != null">#{signature,jdbcType=VARCHAR},</if>
+                <if test="introduction != null">#{introduction,jdbcType=VARCHAR},</if>
+                <if test="updatetime != null">#{updatetime,jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null">#{createtime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <!--  模板设置: 更新字段 ByPrimaryKey  -->
+    <update id="updateByPrimaryKey" parameterType="work.space.entity.Userinfo">
+        update userinfo
+        set 
+                name =  #{name,jdbcType=VARCHAR},
+                gender =  #{gender,jdbcType=VARCHAR},
+                phone =  #{phone,jdbcType=VARCHAR},
+                email =  #{email,jdbcType=VARCHAR},
+                status =  #{status,jdbcType=VARCHAR},
+                signature =  #{signature,jdbcType=VARCHAR},
+                introduction =  #{introduction,jdbcType=VARCHAR},
+                UpdateTime =  #{updatetime,jdbcType=TIMESTAMP},
+                CreateTime =  #{createtime,jdbcType=TIMESTAMP}
+        where   uid = #{uid,jdbcType=VARCHAR} 
+    </update>
+
+    <!--  模板设置: (选择性)更新字段 ByPrimaryKey  -->
+    <update id="updateByPrimaryKeySelective" parameterType="work.space.entity.Userinfo">
+        update userinfo
+        <set>
+                <if test="name != null">name = #{name,jdbcType=VARCHAR},</if>
+                <if test="gender != null">gender = #{gender,jdbcType=VARCHAR},</if>
+                <if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+                <if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+                <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
+                <if test="signature != null">signature = #{signature,jdbcType=VARCHAR},</if>
+                <if test="introduction != null">introduction = #{introduction,jdbcType=VARCHAR},</if>
+                <if test="updatetime != null">UpdateTime = #{updatetime,jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null">CreateTime = #{createtime,jdbcType=TIMESTAMP},</if>
+        </set>
+        where   uid = #{uid,jdbcType=VARCHAR} 
+    </update>
+
+    <!--  模板设置: 插入数据，已存在则直接更新该数据  -->
+    <insert id="toInsertOrUpdate" keyColumn="uid" keyProperty="uid"
+        parameterType="work.space.entity.Userinfo" useGeneratedKeys="true">
+        insert into userinfo
+            ( uid,name,gender,phone,email,status,signature,introduction,UpdateTime,CreateTime )
+        values (
+            #{uid,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR},
+            #{gender,jdbcType=VARCHAR},
+            #{phone,jdbcType=VARCHAR},
+            #{email,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{signature,jdbcType=VARCHAR},
+            #{introduction,jdbcType=VARCHAR},
+            #{updatetime,jdbcType=TIMESTAMP},
+            #{createtime,jdbcType=TIMESTAMP}        
+        )
+        ON DUPLICATE KEY UPDATE
+            name =  #{name,jdbcType=VARCHAR},
+            gender =  #{gender,jdbcType=VARCHAR},
+            phone =  #{phone,jdbcType=VARCHAR},
+            email =  #{email,jdbcType=VARCHAR},
+            status =  #{status,jdbcType=VARCHAR},
+            signature =  #{signature,jdbcType=VARCHAR},
+            introduction =  #{introduction,jdbcType=VARCHAR},
+            UpdateTime =  #{updatetime,jdbcType=TIMESTAMP},
+            CreateTime =  #{createtime,jdbcType=TIMESTAMP}        
+        
+    </insert>
+
+    <!--  模板设置: 插入数据，已存在则(选择性)更新该数据  -->
+    <insert id="toInsertOrUpdateSelective" keyColumn="uid" keyProperty="uid"
+        parameterType="work.space.entity.Userinfo" useGeneratedKeys="true">
+        insert into userinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="uid != null">uid,</if>
+                <if test="name != null">name,</if>
+                <if test="gender != null">gender,</if>
+                <if test="phone != null">phone,</if>
+                <if test="email != null">email,</if>
+                <if test="status != null">status,</if>
+                <if test="signature != null">signature,</if>
+                <if test="introduction != null">introduction,</if>
+                <if test="updatetime != null">UpdateTime,</if>
+                <if test="createtime != null">CreateTime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="uid != null">#{uid,jdbcType=VARCHAR},</if>
+                <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+                <if test="gender != null">#{gender,jdbcType=VARCHAR},</if>
+                <if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+                <if test="email != null">#{email,jdbcType=VARCHAR},</if>
+                <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+                <if test="signature != null">#{signature,jdbcType=VARCHAR},</if>
+                <if test="introduction != null">#{introduction,jdbcType=VARCHAR},</if>
+                <if test="updatetime != null">#{updatetime,jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null">#{createtime,jdbcType=TIMESTAMP},</if>
+        </trim>
+        ON DUPLICATE KEY UPDATE
+        <trim suffixOverrides=",">
+                <if test="name != null">name = #{name,jdbcType=VARCHAR},</if>
+                <if test="gender != null">gender = #{gender,jdbcType=VARCHAR},</if>
+                <if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+                <if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+                <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
+                <if test="signature != null">signature = #{signature,jdbcType=VARCHAR},</if>
+                <if test="introduction != null">introduction = #{introduction,jdbcType=VARCHAR},</if>
+                <if test="updatetime != null">UpdateTime = #{updatetime,jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null">CreateTime = #{createtime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+</mapper>

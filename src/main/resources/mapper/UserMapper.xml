@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.space.mapper.UserMapper">
+
+    <!--  @author Accqiao  -->
+    <!--  @description 我改的模板！虽然也没啥改动，，。  -->
+
+    <resultMap id="BaseResultMap" type="work.space.entity.User">
+            <id property="uid" column="uid" jdbcType="VARCHAR"/>
+            <result property="role" column="role" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        uid,role,status,password
+    </sql>
+    <!--  快在下面写新的语句咯，，。  -->
+
+
+
+
+
+
+    <!--  模板设置: 查询 ByPrimaryKey  -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where  uid = #{uid,jdbcType=VARCHAR} 
+    </select>
+
+    <!--  模板设置: 删除 ByPrimaryKey  -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from user
+        where  uid = #{uid,jdbcType=VARCHAR} 
+    </delete>
+
+    <!--  模板设置: 插入一条数据  -->
+    <insert id="insert" keyColumn="uid" keyProperty="uid"
+        parameterType="work.space.entity.User" useGeneratedKeys="true">
+        insert into user
+        ( uid,role,status,password)
+        values (
+            #{uid,jdbcType=VARCHAR},
+            #{role,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{password,jdbcType=VARCHAR}        
+        )
+    </insert>
+
+    <!--  模板设置: (选择性)插入一条数据  -->
+    <insert id="insertSelective" keyColumn="uid" keyProperty="uid"
+        parameterType="work.space.entity.User" useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="uid != null">uid,</if>
+                <if test="role != null">role,</if>
+                <if test="status != null">status,</if>
+                <if test="password != null">password,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="uid != null">#{uid,jdbcType=VARCHAR},</if>
+                <if test="role != null">#{role,jdbcType=VARCHAR},</if>
+                <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+                <if test="password != null">#{password,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!--  模板设置: 更新字段 ByPrimaryKey  -->
+    <update id="updateByPrimaryKey" parameterType="work.space.entity.User">
+        update user
+        set 
+                role =  #{role,jdbcType=VARCHAR},
+                status =  #{status,jdbcType=VARCHAR},
+                password =  #{password,jdbcType=VARCHAR}
+        where   uid = #{uid,jdbcType=VARCHAR} 
+    </update>
+
+    <!--  模板设置: (选择性)更新字段 ByPrimaryKey  -->
+    <update id="updateByPrimaryKeySelective" parameterType="work.space.entity.User">
+        update user
+        <set>
+                <if test="role != null">role = #{role,jdbcType=VARCHAR},</if>
+                <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
+                <if test="password != null">password = #{password,jdbcType=VARCHAR},</if>
+        </set>
+        where   uid = #{uid,jdbcType=VARCHAR} 
+    </update>
+
+    <!--  模板设置: 插入数据，已存在则直接更新该数据  -->
+    <insert id="toInsertOrUpdate" keyColumn="uid" keyProperty="uid"
+        parameterType="work.space.entity.User" useGeneratedKeys="true">
+        insert into user
+            ( uid,role,status,password )
+        values (
+            #{uid,jdbcType=VARCHAR},
+            #{role,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{password,jdbcType=VARCHAR}        
+        )
+        ON DUPLICATE KEY UPDATE
+            role =  #{role,jdbcType=VARCHAR},
+            status =  #{status,jdbcType=VARCHAR},
+            password =  #{password,jdbcType=VARCHAR}        
+        
+    </insert>
+
+    <!--  模板设置: 插入数据，已存在则(选择性)更新该数据  -->
+    <insert id="toInsertOrUpdateSelective" keyColumn="uid" keyProperty="uid"
+        parameterType="work.space.entity.User" useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="uid != null">uid,</if>
+                <if test="role != null">role,</if>
+                <if test="status != null">status,</if>
+                <if test="password != null">password,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="uid != null">#{uid,jdbcType=VARCHAR},</if>
+                <if test="role != null">#{role,jdbcType=VARCHAR},</if>
+                <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+                <if test="password != null">#{password,jdbcType=VARCHAR},</if>
+        </trim>
+        ON DUPLICATE KEY UPDATE
+        <trim suffixOverrides=",">
+                <if test="role != null">role = #{role,jdbcType=VARCHAR},</if>
+                <if test="status != null">status = #{status,jdbcType=VARCHAR},</if>
+                <if test="password != null">password = #{password,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+</mapper>

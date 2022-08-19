@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.space.mapper.TodolistMapper">
+
+    <!--  @author Accqiao  -->
+    <!--  @description null  -->
+
+    <resultMap id="BaseResultMap" type="work.space.entity.Todolist">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="mark" column="mark" jdbcType="VARCHAR"/>
+            <result property="oksign" column="okSign" jdbcType="TINYINT"/>
+            <result property="delsign" column="delSign" jdbcType="TINYINT"/>
+            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,content,mark,okSign,delSign,updateTime,createTime
+    </sql>
+    <!--  快在下面写新的语句咯，，。  -->
+
+    <select id="selectByOkSign" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from todolist
+        where okSign = #{sign,jdbcType=INTEGER}
+        order by updatetime desc
+        limit #{rows,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
+    </select>
+    <select id="selectByDelSign" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from todolist
+        where delSign = #{sign,jdbcType=INTEGER}
+        order by updatetime desc
+        limit #{rows,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select
+            COUNT(*)
+        from todolist
+    </select>
+
+    <!--  模板设置: 查询 ByPrimaryKey  -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from todolist
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+
+    <!--  模板设置: 查询全部  -->
+    <select id="selectAllData" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from todolist
+    </select>
+
+    <!--  模板设置: 查询 分页/行  -->
+    <select id="selectByRows" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from todolist
+        order by updatetime desc
+        limit #{rows,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
+    </select>
+
+    <!--  模板设置: 删除 ByPrimaryKey  -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from todolist
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+
+    <!--  模板设置: 插入一条数据  -->
+    <insert id="insert" keyColumn="id" keyProperty="id"
+        parameterType="work.space.entity.Todolist" useGeneratedKeys="true">
+        insert into todolist
+        ( id,content,mark,okSign,delSign,updateTime,createTime)
+        values (
+            #{id,jdbcType=INTEGER},
+            #{content,jdbcType=VARCHAR},
+            #{mark,jdbcType=VARCHAR},
+            #{oksign,jdbcType=TINYINT},
+            #{delsign,jdbcType=TINYINT},
+            #{updatetime,jdbcType=TIMESTAMP},
+            #{createtime,jdbcType=TIMESTAMP}        
+        )
+    </insert>
+
+    <!--  模板设置: (选择性)插入一条数据  -->
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+        parameterType="work.space.entity.Todolist" useGeneratedKeys="true">
+        insert into todolist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="content != null">content,</if>
+                <if test="mark != null">mark,</if>
+                <if test="oksign != null">okSign,</if>
+                <if test="delsign != null">delSign,</if>
+                <if test="updatetime != null">updateTime,</if>
+                <if test="createtime != null">createTime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=INTEGER},</if>
+                <if test="content != null">#{content,jdbcType=VARCHAR},</if>
+                <if test="mark != null">#{mark,jdbcType=VARCHAR},</if>
+                <if test="oksign != null">#{oksign,jdbcType=TINYINT},</if>
+                <if test="delsign != null">#{delsign,jdbcType=TINYINT},</if>
+                <if test="updatetime != null">#{updatetime,jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null">#{createtime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <!--  模板设置: 更新字段 ByPrimaryKey  -->
+    <update id="updateByPrimaryKey" parameterType="work.space.entity.Todolist">
+        update todolist
+        set 
+                content =  #{content,jdbcType=VARCHAR},
+                mark =  #{mark,jdbcType=VARCHAR},
+                okSign =  #{oksign,jdbcType=TINYINT},
+                delSign =  #{delsign,jdbcType=TINYINT},
+                updateTime =  #{updatetime,jdbcType=TIMESTAMP},
+                createTime =  #{createtime,jdbcType=TIMESTAMP}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+
+    <!--  模板设置: (选择性)更新字段 ByPrimaryKey  -->
+    <update id="updateByPrimaryKeySelective" parameterType="work.space.entity.Todolist">
+        update todolist
+        <set>
+                <if test="content != null">content = #{content,jdbcType=VARCHAR},</if>
+                <if test="mark != null">mark = #{mark,jdbcType=VARCHAR},</if>
+                <if test="oksign != null">okSign = #{oksign,jdbcType=TINYINT},</if>
+                <if test="delsign != null">delSign = #{delsign,jdbcType=TINYINT},</if>
+                <if test="updatetime != null">updateTime = #{updatetime,jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null">createTime = #{createtime,jdbcType=TIMESTAMP},</if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+
+    <!--  模板设置: 插入数据，已存在则直接更新该数据  -->
+    <insert id="toInsertOrUpdate" keyColumn="id" keyProperty="id"
+        parameterType="work.space.entity.Todolist" useGeneratedKeys="true">
+        insert into todolist
+            ( id,content,mark,okSign,delSign,updateTime,createTime )
+        values (
+            #{id,jdbcType=INTEGER},
+            #{content,jdbcType=VARCHAR},
+            #{mark,jdbcType=VARCHAR},
+            #{oksign,jdbcType=TINYINT},
+            #{delsign,jdbcType=TINYINT},
+            #{updatetime,jdbcType=TIMESTAMP},
+            #{createtime,jdbcType=TIMESTAMP}        
+        )
+        ON DUPLICATE KEY UPDATE
+            content =  #{content,jdbcType=VARCHAR},
+            mark =  #{mark,jdbcType=VARCHAR},
+            okSign =  #{oksign,jdbcType=TINYINT},
+            delSign =  #{delsign,jdbcType=TINYINT},
+            updateTime =  #{updatetime,jdbcType=TIMESTAMP},
+            createTime =  #{createtime,jdbcType=TIMESTAMP}        
+        
+    </insert>
+
+    <!--  模板设置: 插入数据，已存在则(选择性)更新该数据  -->
+    <insert id="toInsertOrUpdateSelective" keyColumn="id" keyProperty="id"
+        parameterType="work.space.entity.Todolist" useGeneratedKeys="true">
+        insert into todolist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="content != null">content,</if>
+                <if test="mark != null">mark,</if>
+                <if test="oksign != null">okSign,</if>
+                <if test="delsign != null">delSign,</if>
+                <if test="updatetime != null">updateTime,</if>
+                <if test="createtime != null">createTime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=INTEGER},</if>
+                <if test="content != null">#{content,jdbcType=VARCHAR},</if>
+                <if test="mark != null">#{mark,jdbcType=VARCHAR},</if>
+                <if test="oksign != null">#{oksign,jdbcType=TINYINT},</if>
+                <if test="delsign != null">#{delsign,jdbcType=TINYINT},</if>
+                <if test="updatetime != null">#{updatetime,jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null">#{createtime,jdbcType=TIMESTAMP},</if>
+        </trim>
+        ON DUPLICATE KEY UPDATE
+        <trim suffixOverrides=",">
+                <if test="content != null">content = #{content,jdbcType=VARCHAR},</if>
+                <if test="mark != null">mark = #{mark,jdbcType=VARCHAR},</if>
+                <if test="oksign != null">okSign = #{oksign,jdbcType=TINYINT},</if>
+                <if test="delsign != null">delSign = #{delsign,jdbcType=TINYINT},</if>
+                <if test="updatetime != null">updateTime = #{updatetime,jdbcType=TIMESTAMP},</if>
+                <if test="createtime != null">createTime = #{createtime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+</mapper>
