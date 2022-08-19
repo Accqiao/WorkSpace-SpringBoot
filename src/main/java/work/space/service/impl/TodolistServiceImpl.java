@@ -26,6 +26,16 @@ public class TodolistServiceImpl extends ServiceImpl<TodolistMapper, Todolist>
     }
 
     @Override
+    public int selectFinishCount(int sign) {
+        return mapper.selectFinishCount(sign);
+    }
+
+    @Override
+    public int selectDeleteCount(int sign) {
+        return mapper.selectDeleteCount(sign);
+    }
+
+    @Override
     public List<Todolist> selectByOkSign(int page,int num, int sign) {
         int rows = page * num - num;
         return mapper.selectByOkSign(rows,num,sign);
@@ -34,7 +44,7 @@ public class TodolistServiceImpl extends ServiceImpl<TodolistMapper, Todolist>
     @Override
     public List<Todolist> selectByDelSign(int page, int num, int sign) {
         int rows = page * num - num;
-        return mapper.selectByOkSign(rows,num,sign);
+        return mapper.selectByDelSign(rows,num,sign);
     }
 
     @Override

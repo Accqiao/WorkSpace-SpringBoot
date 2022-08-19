@@ -14,6 +14,8 @@ public interface TodolistMapper extends BaseMapper<Todolist> {
 
 
     int selectCount();
+    int selectFinishCount(int sign);
+    int selectDeleteCount(int sign);
 
     List<Todolist> selectByOkSign(int rows,int num,int sign);
     List<Todolist> selectByDelSign(int rows,int num,int sign);

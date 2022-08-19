@@ -13,6 +13,8 @@ public interface TodolistService extends IService<Todolist> {
 
 
     int selectCount();
+    int selectFinishCount(int sign);
+    int selectDeleteCount(int sign);
     List<Todolist> selectByOkSign(int page,int num,int sign);
     List<Todolist> selectByDelSign(int page,int num,int sign);
 
